@@ -230,8 +230,8 @@ class _SelectDialogState<T> extends State<SelectDialog<T>> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width!= null? width: MediaQuery.of(context).size.width * 0.9,
-      height: width!= null? height: MediaQuery.of(context).size.height * 0.7,
+      width: widget.width != null? widget.width : MediaQuery.of(context).size.width * 0.9,
+      height: widget.height != null? widget.height: MediaQuery.of(context).size.height * 0.7,
       constraints: widget.constraints ??
           (isWeb ? webDefaultConstraints : mobileDefaultConstraints),
       child: Column(
