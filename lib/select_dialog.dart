@@ -8,8 +8,6 @@ import 'select_bloc.dart';
 typedef Widget SelectOneItemBuilderType<T>(
     BuildContext context, T item, bool isSelected);
 
-typedef Widget SelectTitleBuilderType(BuildContext context, String title);
-
 typedef Widget ErrorBuilderType<T>(BuildContext context, dynamic exception);
 typedef Widget ButtonBuilderType(BuildContext context, VoidCallback onPressed);
 
@@ -35,7 +33,7 @@ class SelectDialog<T> extends StatefulWidget {
   final int searchBoxMinLines;
   final double width;
   final double height;
-  final SelectTitleBuilderType titleBuilder;
+  final Widget title;
   final EdgeInsetsGeometry contentPadding;
 
   ///![image](https://user-images.githubusercontent.com/16373553/80187339-db365f00-85e5-11ea-81ad-df17d7e7034e.png)
@@ -75,7 +73,7 @@ class SelectDialog<T> extends StatefulWidget {
     this.searchBoxMinLines = 1,
     this.width,
     this.height,
-    this.titleBuilder,
+    this.title,
     this.contentPadding
   })  : searchHint = searchHint ?? "Find",
         alwaysShowScrollBar = alwaysShowScrollBar ?? false,
@@ -105,7 +103,7 @@ class SelectDialog<T> extends StatefulWidget {
     bool alwaysShowScrollBar = false,
     int searchBoxMaxLines = 1,
     int searchBoxMinLines = 1,
-    SelectTitleBuilderType titleBuilder,
+    Widget title,
     EdgeInsetsGeometry contentPadding,
     double width,
     double height
