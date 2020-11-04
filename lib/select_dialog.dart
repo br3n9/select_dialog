@@ -105,7 +105,8 @@ class SelectDialog<T> extends StatefulWidget {
     bool alwaysShowScrollBar = false,
     int searchBoxMaxLines = 1,
     int searchBoxMinLines = 1,
-    SelectTitleBuilderType titleBuilder
+    SelectTitleBuilderType titleBuilder,
+    EdgeInsetsGeometry contentPadding
   }) {
     return showDialog(
       context: context,
