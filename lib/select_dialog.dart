@@ -113,8 +113,7 @@ class SelectDialog<T> extends StatefulWidget {
       builder: (context) {
         return AlertDialog(
           backgroundColor: backgroundColor,
-          title: title ??
-            (context, title) => Text(
+          title: title ?? Text(
               label ?? "",
               style: titleStyle,
             ),
