@@ -8,6 +8,8 @@ import 'select_bloc.dart';
 typedef Widget SelectOneItemBuilderType<T>(
     BuildContext context, T item, bool isSelected);
 
+typedef Widget SelectTitleBuilderType(BuildContext context, String title);
+
 typedef Widget ErrorBuilderType<T>(BuildContext context, dynamic exception);
 typedef Widget ButtonBuilderType(BuildContext context, VoidCallback onPressed);
 
@@ -31,6 +33,10 @@ class SelectDialog<T> extends StatefulWidget {
   final bool alwaysShowScrollBar;
   final int searchBoxMaxLines;
   final int searchBoxMinLines;
+  final double width;
+  final double height;
+  final SelectTitleBuilderType titleBuilder;
+  final EdgeInsetsGeometry contentPadding;
 
   ///![image](https://user-images.githubusercontent.com/16373553/80187339-db365f00-85e5-11ea-81ad-df17d7e7034e.png)
   final InputDecoration searchBoxDecoration;
@@ -67,6 +73,10 @@ class SelectDialog<T> extends StatefulWidget {
     bool alwaysShowScrollBar,
     this.searchBoxMaxLines = 1,
     this.searchBoxMinLines = 1,
+    this.width,
+    this.height,
+    this.titleBuilder,
+    this.contentPadding
   })  : searchHint = searchHint ?? "Find",
         alwaysShowScrollBar = alwaysShowScrollBar ?? false,
         super(key: key);
@@ -95,16 +105,15 @@ class SelectDialog<T> extends StatefulWidget {
     bool alwaysShowScrollBar = false,
     int searchBoxMaxLines = 1,
     int searchBoxMinLines = 1,
+    SelectTitleBuilderType titleBuilder
   }) {
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
           backgroundColor: backgroundColor,
-          title: Text(
-            label ?? "",
-            style: titleStyle,
-          ),
+          title: titleBuilder,
+          contentPadding: contentPadding ?? EdgeInsets.all(10),
           content: SelectDialog<T>(
             selectedValue: selectedValue,
             multipleSelectedValues: multipleSelectedValues,
@@ -195,6 +204,13 @@ class _SelectDialogState<T> extends State<SelectDialog<T>> {
             selected: isSelected,
           );
 
+  SelectTitleBuilderType get titleBuilder => 
+      widget.titleBuilder ??
+        (context, title) => Text(
+          label ?? "",
+          style: titleStyle,
+        );
+
   ButtonBuilderType get okButtonBuilder =>
       widget.okButtonBuilder ??
       (context, onPressed) {
@@ -207,8 +223,8 @@ class _SelectDialogState<T> extends State<SelectDialog<T>> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.9,
-      height: MediaQuery.of(context).size.height * 0.7,
+      width: width!= null? width: MediaQuery.of(context).size.width * 0.9,
+      height: width!= null? height: MediaQuery.of(context).size.height * 0.7,
       constraints: widget.constraints ??
           (isWeb ? webDefaultConstraints : mobileDefaultConstraints),
       child: Column(
