@@ -115,7 +115,11 @@ class SelectDialog<T> extends StatefulWidget {
       builder: (context) {
         return AlertDialog(
           backgroundColor: backgroundColor,
-          title: titleBuilder,
+          title: titleBuilder ??
+            (context, title) => Text(
+              label ?? "",
+              style: titleStyle,
+            ),
           contentPadding: contentPadding ?? EdgeInsets.all(10),
           content: SelectDialog<T>(
             selectedValue: selectedValue,
@@ -139,9 +143,7 @@ class SelectDialog<T> extends StatefulWidget {
             searchBoxMaxLines: searchBoxMaxLines,
             searchBoxMinLines: searchBoxMinLines,
             width: width,
-            height: height,
-            titleBuilder: titleBuilder,
-            contentPadding: contentPadding
+            height: height
           ),
         );
       },
@@ -210,13 +212,6 @@ class _SelectDialogState<T> extends State<SelectDialog<T>> {
             title: Text(item.toString()),
             selected: isSelected,
           );
-
-  SelectTitleBuilderType get titleBuilder => 
-      widget.titleBuilder ??
-        (context, title) => Text(
-          label ?? "",
-          style: titleStyle,
-        );
 
   ButtonBuilderType get okButtonBuilder =>
       widget.okButtonBuilder ??
